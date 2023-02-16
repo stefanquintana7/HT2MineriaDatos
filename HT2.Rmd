@@ -1,0 +1,26 @@
+---
+title: "HT2"
+author: "Stefan Quintana"
+date: "2/16/2023"
+output: html_document
+---
+
+```{r, echo=FALSE}
+library(cluster) #Para calcular la silueta
+library(e1071)#para cmeans
+library(mclust) #mixtures of gaussians
+library(fpc) #para hacer el plotcluster
+library(NbClust) #Para determinar el número de clusters óptimo
+library(factoextra) #Para hacer gráficos bonitos de clustering
+library(hopkins) #Para revisar si vale la pena hacer agrupamiento
+library(GGally) #Para hacer el conjunto de graficos
+library(FeatureImpCluster) #Para revisar la importancia de las variables en los grupos.
+library(pheatmap) #Para hacer mapa de calor
+```
+
+```{r, echo=False}
+datos<-read.csv("C:/Stefan/MineriaDatos/movies.csv")
+set.seed(123)
+datos<-datos[complete.cases(iris),]
+summary(datos)
+```
