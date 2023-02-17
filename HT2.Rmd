@@ -28,19 +28,19 @@ En el análisis exploratorio realizado se determinó que las variables cuantitat
 
 ```{r, echo=FALSE}
 
-p <- datos[,"popularity"]
-b <- datos[,"budget"]
-r <- datos[,"revenue"]
-r1 <- datos[,"runtime"]
-g <- datos[,"genresAmount"]
-p1 <- datos[,"productionCoAmount"]
-p2 <- datos[,"productionCountriesAmount"]
-a <- datos[,"actorsAmount"]
-c <- datos[,"castWomenAmount"]
-c1 <- datos[,"castMenAmount"]
-g1 <- datos[,"genresAmount"]
-v <- datos[,"voteAvg"]
-v1 <- datos[,"voteCount"]
+p <- as.numeric(datos[,"popularity"])
+b <- as.numeric(datos[,"budget"])
+r <- as.numeric(datos[,"revenue"])
+r1 <- as.numeric(datos[,"runtime"])
+g <- as.numeric(datos[,"genresAmount"])
+p1 <- as.numeric(datos[,"productionCoAmount"])
+p2 <- as.numeric(datos[,"productionCountriesAmount"])
+a <- as.numeric(datos[,"actorsAmount"])
+c <- as.numeric(datos[,"castWomenAmount"])
+c1 <- as.numeric(datos[,"castMenAmount"])
+g1 <- as.numeric(datos[,"genresAmount"])
+v <- as.numeric(datos[,"voteAvg"])
+v1 <- as.numeric(datos[,"voteCount"])
 
 datosc <- data.frame(p,b,r,r1,g,p1,p2,a,c,c1,g1,v,v1)
 
