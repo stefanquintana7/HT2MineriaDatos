@@ -25,7 +25,103 @@ datos<-datos[complete.cases(datos),]
 summary(datos)
 ```
 
-#Pregunta 1. Preprocesamiento del dataset
+### budget 
+```{r, echo = FALSE}
+library(nortest)
+qqnorm(datos$budget)
+qqline(datos$budget)
+lillie.test(datos$budget)
+```
+### revenue
+```{r, echo = FALSE}
+qqnorm(datos$budget)
+qqline(datos$budget)
+lillie.test(datos$revenue)
+```
+Basándose en la gráfica, donde se puede notar que los puntos se alejan de la recta teórica, podemos argumentar que los datos no respetan una distribución normal, lo cuál se confirma en el test Kolmogorov-Smirnov, donde se rechaza la hipótesis nula, por lo tanto, se concluye que los datos no provienen de una distribución normal.
+
+### runtime 
+```{r, echo = FALSE}
+qqnorm(datos$runtime)
+qqline(datos$runtime)
+lillie.test(datos$runtime)
+```
+Análogamente con el set de datos anterior, el valor p del test Kolmogorov-Smirnov hace que se rechace la hipótesis nula y se concluya que los datos no provienen de una distribución normal.
+
+### popularity 
+```{r, echo = FALSE}
+qqnorm(datos$popularity)
+qqline(datos$popularity)
+lillie.test(datos$popularity)
+```
+El valor-p de el test Kolmogorov-Smirnov nos indica que se rechaza la hipótesis nula, por lo tanto, se concluye que los datos no provienen de una distribución normal.
+
+### voteAvg  
+```{r, echo = FALSE}
+qqnorm(datos$voteAvg)
+qqline(datos$voteAvg)
+lillie.test(datos$voteAvg)
+```
+El valor-p de el test Kolmogorov-Smirnov y la gráfica indican que los datos no respetan una distribución normal.
+
+### voteCount
+```{r, echo = FALSE}
+qqnorm(datos$voteCount)
+qqline(datos$voteCount)
+lillie.test(datos$voteCount)
+```
+Nuevamente, el valor-p del test de Kolmogorov-Smirnov es menor a 0.05, por lo tanto, se rechaza la hipótesis nula y se argumenta que los datos no provienen de una distribución normal.
+
+### genresAmount
+```{r, echo = FALSE}
+qqnorm(datos$genresAmount)
+qqline(datos$genresAmount)
+lillie.test(datos$genresAmount)
+```
+Con un valor-p menor a 0.05 en el test Kolmogorov-Smirnov se rechaza la hipótesis nula y se concluye que los datos no provienen de una distribución normal, argumento que refuerza la gráfica.
+
+### productionCoAomunt
+```{r, echo = FALSE}
+qqnorm(datos$productionCoAmount)
+qqline(datos$productionCoAmount)
+lillie.test(datos$productionCoAmount)
+```
+El test Kolmogorov-Smirnov revela un valor-p menor a 0.05, además la gráfica nos muestra que los datos no se mantienen cercanos a la recta teórica en su totalidad, por lo tanto, se concluye que los datos no provienen de una distribución normal.
+
+### productionCountriesAmount 
+```{r, echo = FALSE}
+qqnorm(datos$productionCountriesAmount)
+qqline(datos$productionCountriesAmount)
+lillie.test(datos$productionCountriesAmount)
+```
+Al observar la gráfica podemos notar que los datos no se mantienen cercanos a la recta teórica en su totalidad, además el test Kolmogorov-Smirnov nos da un valor-p el cuál nos hace rechazar la hipótesis nula, argumentando así, que los datos no provienen de una distribución normal.
+
+### actorsAmount 
+```{r, echo = FALSE}
+qqnorm(datos$actorsAmount)
+qqline(datos$actorsAmount)
+lillie.test(datos$actorsAmount)
+```
+Debido a que se obtiene un valor-p menor a 0.05 en el test de Kolmogorov-Smirnov, se rechaza la hipótesis nula y se concluye que los datos no provienen de una distribución normal.
+
+### castWomenAmount 
+```{r, echo = FALSE}
+d1 <- as.numeric(datos$castWomenAmount)
+qqnorm(d1)
+qqline(d1)
+lillie.test(d1)
+```
+Se puede notar en la gráfica que muchos de los datos no se mantienen en cercanía a la recta teórica, por lo tanto, se concluye que el set de datos no respeta una distribución normal, conclusión reforzada por el test Kolmogorov-Smirnov.
+
+### castMenAmount 
+```{r, echo = FALSE}
+d2 <- as.numeric(datos$castMenAmount)
+qqnorm(d2)
+qqline(d2)
+lillie.test(d2)
+```
+Nuevamente, obtenemos una gráfica donde los valores no se mantienen cercanos a la recta teórica y un valor-p menor a 0.05 en el test Kolmogorov-Smirnov, lo cuál hace que se concluya que no hay normalidad en el set de datos.
+
 
 En el análisis exploratorio realizado se determinó que las variables cuantitativas no respetaban una distribución normal. Por lo tanto, todas las variables son a tomar en cuenta en el proceso.
 
@@ -51,13 +147,13 @@ datosc <- data.frame(p,b,r,r1,g,p1,p2,a,c,c1,g1,v,v1)
 datosCS <- scale(datosc)
 ```
 
-
-
 ```{r} 
 hopkins(datosCS)
 #Matriz de distancia
 datos_dist<- dist(datosCS)
 ```
+
+Con un valor alejado a 0.5 se puede concluir que los datos no son aleatorios, por lo tanto, es adecuado el proceso de agrupamiento
 ```{r}
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
 fviz_dist(datos_dist, show_labels = F)
