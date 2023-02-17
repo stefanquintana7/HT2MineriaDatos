@@ -21,6 +21,41 @@ library(pheatmap) #Para hacer mapa de calor
 ```{r, echo=False}
 datos<-read.csv("C:/Stefan/MineriaDatos/movies.csv")
 set.seed(123)
-datos<-datos[complete.cases(iris),]
+datos<-datos[complete.cases(datos),]
 summary(datos)
 ```
+En el análisis exploratorio realizado se determinó que las variables cuantitativas no respetaban una distribución normal. Por lo tanto, todas las variables son a tomar en cuenta en el proceso.
+
+```{r, echo=FALSE}
+
+p <- datos[,"popularity"]
+b <- datos[,"budget"]
+r <- datos[,"revenue"]
+r1 <- datos[,"runtime"]
+g <- datos[,"genresAmount"]
+p1 <- datos[,"productionCoAmount"]
+p2 <- datos[,"productionCountriesAmount"]
+a <- datos[,"actorsAmount"]
+c <- datos[,"castWomenAmount"]
+c1 <- datos[,"castMenAmount"]
+g1 <- datos[,"genresAmount"]
+v <- datos[,"voteAvg"]
+v1 <- datos[,"voteCount"]
+
+datosc <- data.frame(p,b,r,r1,g,p1,p2,a,c,c1,g1,v,v1)
+
+#Escalar los datos
+datosCS <- scale(datosc)
+```
+
+```{r} 
+hopkins(datosCS)
+#Matriz de distancia
+datos_dist<- dist(datosCS)
+```
+```{r}
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+fviz_dist(datos_dist, show_labels = F)
+```
+
+
