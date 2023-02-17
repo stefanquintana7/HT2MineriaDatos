@@ -24,6 +24,9 @@ set.seed(123)
 datos<-datos[complete.cases(datos),]
 summary(datos)
 ```
+
+#Pregunta 1. Preprocesamiento del dataset
+
 En el análisis exploratorio realizado se determinó que las variables cuantitativas no respetaban una distribución normal. Por lo tanto, todas las variables son a tomar en cuenta en el proceso.
 
 ```{r, echo=FALSE}
@@ -47,6 +50,8 @@ datosc <- data.frame(p,b,r,r1,g,p1,p2,a,c,c1,g1,v,v1)
 #Escalar los datos
 datosCS <- scale(datosc)
 ```
+
+
 
 ```{r} 
 hopkins(datosCS)
