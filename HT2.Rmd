@@ -185,7 +185,7 @@ plot(1:10, wss, type="b", xlab="Number of Clusters",  ylab="Within groups sum of
 K-means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en k grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o cluster. Se suele usar la distancia cuadrática.
  
 ```{r}
-km<-kmeans(datosCS,5,iter.max =1000)
+km<-kmeans(datosCS,3,iter.max =1000)
 #datos$grupo<-km$cluster
 plotcluster(datosCS,km$cluster) 
 #plotcluster(datosCS[,1:12],km$cluster)
@@ -214,9 +214,9 @@ El algortimo de clúster jerárquico agrupa los datos basándose en la distancia
 matriz_dist<- dist(datosCS)
 hc<-hclust(datos_dist, method = "ward.D2") #Genera el clustering jerarquico de los datos
 plot(hc, cex=0.5, axes=FALSE) #Genera el dendograma
-cutree(hc, h = 5)
-rect.hclust(hc,k=5)
-groups<-cutree(hc,k=5) #corta el dendograma, determinando el grupo de cada fila
+cutree(hc, h = 3)
+rect.hclust(hc,k=3)
+groups<-cutree(hc,k=3) #corta el dendograma, determinando el grupo de cada fila
 ```
 
 
@@ -232,13 +232,13 @@ Como se observa la silueta del algoritmo cluster jerárquico fue de `r mean(silh
 ## PROBLEMA 5
 El gráfico de la silueta de K-means sería el siguiente:
 ```{r}
-plot(silkm, cex.names=.4, col=1:3, border=NA)
+plot(silkm, cex.names=.4, col=1:4, border=NA)
 ```
 
 
 Y el gráfico de la silueta de Jerargico sería: 
 ```{r}
-plot(silhc, cex.names=.4, col=1:3, border = NA)
+plot(silhc, cex.names=.5, col=1:4, border = NA)
 ```
 
 Al recopilar el promedio de los datos obtenemos:
@@ -248,7 +248,7 @@ df <- data.frame(Algoritmo=c("K-mean", "Jerarquico"),
 df
 ```
 
-Se puede observar que el cluster jerárquico fue el que obtuvo el mejor resultado en la prueba de silueta pero que el algorito Kmeans esta por debajo por 0.03 puntos lo que indica que sus resultados son muy parecidos. 
+Se puede observar que el cluster jerárquico fue el que obtuvo el mejor resultado en la prueba de silueta pero que el algorito Kmeans es mayor que el Jerarguico por 0.2 puntos. Al observar los valores de las siluetas observamos que no es la mejor agrupacion pero que no es mala de igua forma. Tambien observamos que en los grupos de ambas siluetas hay elementos mal ubicados ya que hay valores negativos dentro de las siluetas.
 
 ## PROBLEMA 6
 
@@ -258,4 +258,4 @@ library(GGally)
 ggpairs(datosc,columns=c(4,5,6,9))
 ```
 Estos son algunos de las variables analizadas para ver su correlación, su frencuencia y su normalidad. En las variables de la gráfica se puede observar que los datos tienen una tendencia a agruparse al lado izquierdo, es decir, que hay una mayor de variables con un valor cercano a 0. Además, se puede observar en los gráficos de caja y bigotes la tendencia central de las
-variables se encuentra en el lado izquierdo de la gráfica. De igual forma la correlacion entre algunas de las varibales es baja lo que indica que podriamos ignorarlas al momento de volver a hacer otro analisis. De igual forma en varios datos analisados en el problema 1 observamos que no todas las variables siguen una distribucion normal lo que indica que hay varios datos atipicos, estos igual podrian ser utilizados para poder eliminar varibles y que no afecten los datos. 
+variables se encuentra en el lado izquierdo de la gráfica. De igual forma la correlacion entre algunas de las varibales es baja lo que indica que podriamos ignorarlas al momento de volver a hacer otro analisis. De igual forma en varios datos analizados en el problema 1 observamos que no todas las variables siguen una distribucion normal lo que indica que hay varios datos atipicos, estos igual podrian ser utilizados para poder eliminar varibles y que no afecten los datos. 
