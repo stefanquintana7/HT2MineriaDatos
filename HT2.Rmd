@@ -170,6 +170,10 @@ Con un valor alejado a 0.5 se puede concluir que los datos no son aleatorios, po
 
 ## PROBLEMA 3
 
+Determine cuál es el número de grupos a formar más adecuado para los datos que está trabajando. 
+Haga una gráfica de codo y explique la razón de la elección de la cantidad de clústeres con la que 
+trabajará. 
+
 
 ```{r metodo de codo}
 wss=0
@@ -178,12 +182,15 @@ for (i in 1:10)
 
 plot(1:10, wss, type="b", xlab="Number of Clusters",  ylab="Within groups sum of squares")
 ```
-
+Podemos determinar la cantidad de grupos o clusters a través de un análisis para la gráfica generada por el método del codo. Podemos observar la particularidad del gráfico anterior que muestra un primer codo para la cantidad de grupos 3, y luego se genera otro segundo codo falso en la cantidad 6, se realizaron algoritmos como en el problema 4 para 6 grupos/clusters pero el agrupamiento no era uniforme, por lo que se decidió escoger agrupar los datos en 3 grupos, que es la cantidad de grupos con lo que se desarrollaron las siguientes preguntas.
 
 ## PROBLEMA 4
 
-K-means es un algoritmo de clasificación no supervisada (clusterización) que agrupa objetos en k grupos basándose en sus características. El agrupamiento se realiza minimizando la suma de distancias entre cada objeto y el centroide de su grupo o cluster. Se suele usar la distancia cuadrática.
+Utilice  los  algoritmos  k-medias  y  clustering  jerárquico  para  agrupar.  Compare  los  resultados 
+generados por cada uno. 
  
+### K-means
+
 ```{r}
 km<-kmeans(datosCS,3,iter.max =1000)
 #datos$grupo<-km$cluster
@@ -191,24 +198,16 @@ plotcluster(datosCS,km$cluster)
 #plotcluster(datosCS[,1:12],km$cluster)
 ```
 
-Como se observa en la imagen, el primer paso es escoger el numero de grupos K, en este caso fue 3 tal como se justificó anteriormente, posterior a ello se establecen k centroides en el espacio de datos.
+Como se observa en el grafico generado para k-Means, el primer paso es escoger el numero de grupos K, en este caso fue 3 tal como se dejo claron en el problema anterior. A continuación se presenta otro gráfico para K-Means y poder observar de mejor manera las agrupaciones.
 
 ```{r}
 fviz_cluster(km, data = datosCS,geom = "point", ellipse.type = "norm")
 ```
 
 
-Luego se asignan los centroides y se reubican.
-```{r}
-silkm<-silhouette(km$cluster,dist(datosCS))
-mean(silkm[,3]) 
-Kmean<-mean(silkm[,3]) 
-```
-Se obtiene que la silueta de K-means es de `r mean(silkm[,3])` esto indica que tenemos un buen resultado, ya que es muy cercano a 1, siendo un resultado deseable. </br>
+### Cluster jerarquico
 
-
-#### Cluster jerarquico
-El algortimo de clúster jerárquico agrupa los datos basándose en la distancia entre cada uno y buscando que los datos que están dentro de un clúster sean los más similares entre sí.
+A continuación se presenta el gráfico generado para el algoritmo de agrupación jerarquico. 
 
 ```{r}
 matriz_dist<- dist(datosCS)
@@ -219,26 +218,25 @@ rect.hclust(hc,k=3)
 groups<-cutree(hc,k=3) #corta el dendograma, determinando el grupo de cada fila
 ```
 
+##### Comparación entre K-Means y Jerarquico
 
-```{r}
-silhc<-silhouette(groups,datos_dist)
-mean(silhc[,3]) 
-Jerarquico<-mean(silhc[,3]) 
-```
-
-Como se observa la silueta del algoritmo cluster jerárquico fue de `r mean(silhc[,3])`, indicando que su valor fue muy cercano a 1, siendo un resultado deseable.</br>
-
+En ambos gráficos generados para el algoritmo K-Means podemos observar que estan bien definidos los 3 grupos y tienen una ¨forma¨ similar, donde probablemente uno de los 3 grupos es ligeramente mas pequeño que los otros 2. En cambio, utilizando el algoritmo jerarquico presenta uno de los 3 grupos con un tamaño abismalmente más grande, uno de tamaño regular-pequeño y uno demasiado pequeño. En conclusión el K-Means nos generó agrupaciones más equitativas mentras que el segundo algoritmo presenta desvalance entre el tamaño de los grupos.
 
 ## PROBLEMA 5
 El gráfico de la silueta de K-means sería el siguiente:
 ```{r}
+
+silkm<-silhouette(km$cluster,dist(datosCS))
 plot(silkm, cex.names=.4, col=1:4, border=NA)
+Kmean<-mean(silkm[,3]) 
 ```
 
 
 Y el gráfico de la silueta de Jerargico sería: 
 ```{r}
+silhc<-silhouette(groups,datos_dist)
 plot(silhc, cex.names=.5, col=1:4, border = NA)
+Jerarquico<-mean(silhc[,3]) 
 ```
 
 Al recopilar el promedio de los datos obtenemos:
